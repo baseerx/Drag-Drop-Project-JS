@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drag & Drop Testing</title>
+
+    <style>
+        body{
+        display: flex;
+        justify-content: center;
+    }
+        .column {
+         width: 100px;
+         min-height: 100px;
+         border: 1px solid black;
+         padding:10px;
+         display: inline-block;
+         margin: 10px;
+         text-align: center;
+        
+        }
+        .box{
+         width: 50px;
+         min-height: 50px;
+         background-color: orange;
+         padding: 10px;
+         margin: 0 auto;
+         border-radius: 5px;
+         color:white;
+         text-wrap: nowrap;
+       
+        }
+        .box p{
+        text-align: center;}
+    </style>
+</head>
+<body>
+    
+    <div class="column" id="start" ondrop="onDrop(event)" ondragover="allowDrop(event)">Start
+        <div class="box" id="task1" ondragstart="drag(event)" draggable="true">
+            <p>Drag me</p>
+        </div>
+    </div>
+      <div class="column" id="in-progress" ondrop="onDrop(event)" ondragover="allowDrop(event)">In Progress</div>
+         <div class="column" id="completed" ondrop="onDrop(event)" ondragover="allowDrop(event)">Complete</div>
+</body>
+</html>
+
+ <script>
+  function allowDrop(e){
+e.preventDefault();
+
+}
+function drag(e){
+ e.dataTransfer.setData('text',e.target.id)
+}
+function onDrop(e){
+ e.preventDefault();
+ const data=e.dataTransfer.getData('text');
+ const task=document.getElementById(data);
+
+// Append the task to the dropped column if it's a valid drop target
+           
+                e.target.appendChild(task);
+      
+ if(e.target.id=='in-progress'){
+console.log("I am in progress")
+}
+else if( e.target.id=='completed'){
+console.log("I am in completed")
+}
+else{
+console.log("just started")
+}
+}
+ </script>
